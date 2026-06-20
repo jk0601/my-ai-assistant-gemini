@@ -104,7 +104,7 @@ client = get_client(api_key)
 def new_chat():
     """새 대화 세션을 만듭니다."""
     st.session_state.chat = client.chats.create(
-        model="gemini-1.5-flash",
+        model="gemini-2.5-flash",
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
         ),
@@ -132,7 +132,7 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
-    st.caption("**모델:** gemini-1.5-flash")
+    st.caption("**모델:** gemini-2.5-flash")
     st.caption("**배포:** Streamlit Cloud")
     st.caption("**API:** Google Gemini (무료 티어)")
 
