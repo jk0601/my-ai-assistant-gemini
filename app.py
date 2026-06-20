@@ -98,7 +98,7 @@ SYSTEM_PROMPT = f"""당신은 AI 도구 사용법을 친절하게 안내하는 A
 def get_model():
     """Gemini 모델 객체를 캐싱하여 재사용합니다."""
     return genai.GenerativeModel(
-        model_name="gemini-2.0-flash",   # 무료 티어 지원, 최신 모델
+        model_name="gemini-1.5-flash",   # 무료 티어 지원
         system_instruction=SYSTEM_PROMPT,
     )
 
@@ -132,7 +132,7 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
-    st.caption("**모델:** gemini-2.0-flash")
+    st.caption("**모델:** gemini-1.5-flash")
     st.caption("**배포:** Streamlit Cloud")
     st.caption("**API:** Google Gemini (무료 티어)")
 
