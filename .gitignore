@@ -1,4 +1,5 @@
 # API 키가 담긴 파일 — 절대 GitHub에 올리지 않습니다
+.env
 .streamlit/secrets.toml
 
 # Python 캐시

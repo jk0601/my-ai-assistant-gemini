@@ -8,6 +8,10 @@ import os
 import google.generativeai as genai
 import pdfplumber
 import streamlit as st
+from dotenv import load_dotenv
+
+# 로컬 개발: .env 파일에서 환경변수 로드 (파일 없으면 무시)
+load_dotenv()
 
 # ── 페이지 기본 설정 ────────────────────────────────────────────────────────
 st.set_page_config(
@@ -31,13 +35,14 @@ st.markdown("""
 
 
 # ── 1. API 키 로드 ──────────────────────────────────────────────────────────
-# 로컬: .streamlit/secrets.toml 에 GEMINI_API_KEY = "..." 형식으로 저장
-# 배포: Streamlit Cloud 앱 설정 → Secrets 탭에 동일하게 입력
-try:
-    api_key = st.secrets["GEMINI_API_KEY"]
-except (KeyError, FileNotFoundError):
+# 우선순위: .env 환경변수 → Streamlit Cloud Secrets
+# 로컬:  .env 파일에 GEMINI_API_KEY=your-key 입력 (위 load_dotenv()가 읽어줌)
+# 배포:  Streamlit Cloud 앱 설정 → Secrets 탭에 GEMINI_API_KEY = "your-key" 입력
+api_key = os.environ.get("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY", "")
+
+if not api_key:
     st.error("⚠️ GEMINI_API_KEY가 설정되지 않았습니다.")
-    st.info("`.streamlit/secrets.toml` 파일에 `GEMINI_API_KEY = \"your-key\"`를 추가하세요.")
+    st.info("`.env` 파일에 `GEMINI_API_KEY=발급받은키` 를 추가하세요. (.env.example 참고)")
     st.stop()
 
 genai.configure(api_key=api_key)
